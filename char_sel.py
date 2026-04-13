@@ -24,6 +24,10 @@ def char_sel():
       if s not in wp:
         print("Invalid weapon. Please choose again.")
         weapon()
+      else:
+         print("You have chosen the", s, "weapon.")
+         mgs = None
+         return s, mgs
 
   if cl.lower() in ("fighter", "barbarian"):
     print("Choose a Weapon selection: \n")
@@ -34,13 +38,17 @@ def char_sel():
     print("5. Katana")
     print("6. Spear")
     print("7. Gauntlets")
-    wp = weapon()
+    wp, mgs = weapon()
   def magic():
     mg = ("fireball", "ice shard", "lightning bolt", "poison cloud", "tidal wave", "earthquake", "air blow")
     mgs = input("Enter spell:\n")
     if mgs not in mg:
       print("Invalid spell. Please choose again.")
       magic()
+    else:
+        print("You have chosen the", mgs, "spell.")
+        wp = None
+        return mgs, 
 
   if cl.lower() == "mage":
     print("Choose a starter spell: ")
@@ -51,7 +59,7 @@ def char_sel():
     print("5. Tidal Wave")
     print("6. Earthquake")
     print("7. Air Blow")
-    mgs = magic()
+    mgs, wp = magic()
 
   def heal():
     h = ("heal", "revive", "purify", "blessing", "barrier")
@@ -61,7 +69,8 @@ def char_sel():
         heal()
     else:
         print("You have chosen the", hls, "spell.")
-        return hls
+        wp = None
+        return hls, wp
   if cl.lower() == "healer":
     print("Choose a starter spell: ")
     print("1. Heal ")
@@ -69,7 +78,7 @@ def char_sel():
     print("3. Purify ")
     print("4. Blessing")
     print("5. Barrier")
-    mgs = heal()
+    mgs, wp = heal()
 
   print("Character creation complete.")
   print("Name: ", name)
@@ -78,3 +87,4 @@ def char_sel():
     print("Starter Weapon: ", wp)
   else:
     print("Starter Spell: ", mgs)
+  return name, cl, wp, mgs
