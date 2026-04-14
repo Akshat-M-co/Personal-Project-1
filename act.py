@@ -92,7 +92,7 @@ class Barbarian(Player):
     self.__stats = {"strength": 15, "speed": 5, "defence": 3, "luck": 2}
     self.rage = False
   
-  def Rage(self, target):
+  def Rage(self):
     if self.magic < 10:
       print("Not enough magic! Consume a materium to restore Magic potential")
       return
