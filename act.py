@@ -75,6 +75,9 @@ class Fighter(Player):
       if not(self.focus):
           self.focus = True
           self.stats["luck"] *= 2
+          print("Focus activated!")
+      else:
+          print("Focus already activated!")
 
 
 class Barbarian(Player):
