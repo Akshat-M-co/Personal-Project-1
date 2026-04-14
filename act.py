@@ -66,15 +66,15 @@ class Fighter(Player):
     sel = random.randint(1, 10)
     if abs(ran - sel) <= self.__stats["luck"]:
       print("Attack successful!")
-      target.health -= dmg - target.stats["defence"]
+      target.health -= dmg - target.__stats["defence"]
       self.weapon.durability -= 1
       if self.focus:
           self.focus = False
-          self.stats["luck"] /= 2
-  def focus():
+          self.__stats["luck"] /= 2
+  def Focus(self):
       if not(self.focus):
           self.focus = True
-          self.stats["luck"] *= 2
+          self.__stats["luck"] *= 2
           print("Focus activated!")
       else:
           print("Focus already activated!")
