@@ -1,0 +1,5 @@
+[nix]
+packages = ["neovim"]
+
+[agent]
+expertMode = true

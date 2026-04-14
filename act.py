@@ -137,7 +137,18 @@ class Mage(Player):
             print("Casting", chosen.title())
             self.magic -= 10
             dmg = 20 + 1.2 * self.level
+            if self.potent:
+                self.potent = False
+                self.magic /= 2
+                dmg *= 2
+                self.__stats["luck"] *= 2
             x, y = random.randint(1, 30), random.randint(1, 30)
             if abs(x-y) <= self.__stats["luck"]:
                 print("Spell successful!")
                 target.hp -= dmg
+      def Potency(self):
+          if not(self.potent):
+             self.potent = True
+             self.magic *= 2
+             self.__stats["luck"] /= 2
+             print("Potency activated!")
