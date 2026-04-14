@@ -47,6 +47,10 @@ class Player:
   
    def remove_from_inventory(self, item):
       self.inventory.remove(item)
+   def level_up(self):
+       if self.xp >= 100:
+           self.level += 1
+           for val in self
    
 class Fighter(Player):
   def __init__(self, name, weapon):
@@ -81,7 +85,7 @@ class Fighter(Player):
 
 
 class Barbarian(Player):
-  def __init__(self, name, weapon = Weapon("Axes", 2, 60, 15)):
+  def __init__(self, name, weapon):
     super().__init__(name)
     self.magic = 20
     self.weapon = weapon
@@ -92,7 +96,7 @@ class Barbarian(Player):
     if self.magic < 10:
       print("Not enough magic! Consume a materium to restore Magic potential")
       return
-    print("Rage Activated! Damage increased by 50%")
+    print("Rage Activated!")
     self.__stats["strength"] *= 1.5
     self.magic -= 10
     self.rage = True
@@ -111,3 +115,29 @@ class Barbarian(Player):
     if self.rage:
       self.rage = False
       self.__stats["strength"] /= 1.5
+class Mage(Player):
+    def __init__(self, name, spell):
+        super().__init__(name)
+        self.magic = 100
+        self.mps = [spell]
+        self.__stats = {"strength":2, "defence":8, "speed":10, "luck": 10}
+        self.potent = False
+    def spell(self, target):
+        print("Choose spell:")
+        for i in self.mps:
+            print(f"{self.mps.index(i) + 1}. {i}")
+        chosen = input("\n")
+        if chosen.lower() not in self.mps:
+            print("Invalid Spell. Choose again.")
+            spell()
+        else:
+            if self.magic < 10:
+                print("Not enough magical potential. Use a materium to regain magical strength!")
+                return
+            print("Casting", chosen.title())
+            self.magic -= 10
+            dmg = 20 + 1.2 * self.level
+            x, y = random.randint(1, 30), random.randint(1, 30)
+            if abs(x-y) <= self.__stats["luck"]:
+                print("Spell successful!")
+                target.hp -= dmg
