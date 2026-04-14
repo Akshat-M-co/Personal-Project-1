@@ -23,6 +23,7 @@ class Player:
      self.inventory = []
      self.level = level
      self.cash = 100
+     self.xp = 0
      
    def __str__(self):
      return f"{self.name} has {self.health} HP"
@@ -65,8 +66,18 @@ class Fighter(Player):
     sel = random.randint(1, 10)
     if abs(ran - sel) <= self.__stats["luck"]:
       print("Attack successful!")
-      target.health -= dmg - target.stats["defence"]
+      target.health -= dmg - target.__stats["defence"]
       self.weapon.durability -= 1
+      if self.focus:
+          self.focus = False
+          self.__stats["luck"] /= 2
+  def Focus(self):
+      if not(self.focus):
+          self.focus = True
+          self.__stats["luck"] *= 2
+          print("Focus activated!")
+      else:
+          print("Focus already activated!")
 
 
 class Barbarian(Player):
@@ -100,5 +111,3 @@ class Barbarian(Player):
     if self.rage:
       self.rage = False
       self.__stats["strength"] /= 1.5
-    
-     
