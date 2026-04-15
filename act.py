@@ -154,3 +154,39 @@ class Mage(Player):
             self.magic *= 2
             self.__stats["luck"] /= 2
             print("Potency activated!")
+class Healer(Player):
+    def __init__(self, name, spell):
+        super().__init__(name)
+        self.magic = 150
+        self.mps = [spell]
+        self.__stats = {"strength":1, "defence":8, "speed": 7, "luck": 8}
+        self.wind = False
+    def heal(self, target):
+        if self.magic < 15:
+            print("Not enough magic! Use a materium to restore magical potential.")
+            return
+        if target.health <= 0:
+            print("Cannot heal dead ally.")
+            return
+        self.magic -= 15
+        if self.wind:
+            target.health += 10*self.level
+        else:
+            target.health += 5*self.level
+        print("successfully healed ally")
+    def revive(self, target):
+        if self.magic < 30:
+            print("Not enough magic! Use a materium to restore magical potential")
+            return
+        if target.health > 0:
+            print("Cannot revive a target that is alive.")
+            return
+        self.magic -= 30
+        target.health = 100
+        print("Successfully healed ally!")
+    def Wind(self):
+        self.wind = True
+        print("Healing Wind Active!")
+
+
+
