@@ -1,4 +1,3 @@
-from act import *
 auto_save = False
 def save_game(details, save_slot):
     if auto_save:
@@ -29,3 +28,10 @@ def load_game(save_slot):
     load.close()
     print("Loading complete.")
     return details
+def delete(save_slot):
+    o = open(f"Save file {save_slot}.txt", "w")
+    o.close()
+    print("Deleted save game.")
+    return
+def switch_autosave(auto_save):
+    return not(auto_save)
