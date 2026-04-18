@@ -24,7 +24,7 @@ class Player:
      self.level = level
      self.cash = 100
      self.xp = 0
-     
+     self.next_level = 100
    def __str__(self):
      return f"{self.name} has {self.health} HP"
 
@@ -47,11 +47,13 @@ class Player:
   
    def remove_from_inventory(self, item):
       self.inventory.remove(item)
-   def level_up(self):
-       if self.xp >= 100:
+   
+    def level_up(self):
+       if self.xp >= self.next_level:
            self.level += 1
            for val in self.__stats.values():
                val += 1
+           self.next_level *= 1.5
 
    
 class Fighter(Player):
@@ -117,6 +119,7 @@ class Barbarian(Player):
     if self.rage:
       self.rage = False
       self.__stats["strength"] /= 1.5
+
 class Mage(Player):
     def __init__(self, name, spell):
         super().__init__(name)
