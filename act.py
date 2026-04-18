@@ -14,6 +14,25 @@ class Weapon:
     if self.durability <= 0:
         print("Weapon destroyed")
         return True
+class Spell:
+    def __init__(self, name, damage, magic_cost, level = 1):
+        self.name = name
+        self.damage = damage
+        self.magic_cost = magic_cost
+        self.level = level
+    def upgrade(self):
+        self.level += 1
+        self.damage += 10
+    def use(self, target):
+        print(f"{self.name} cast!")
+        target.health -= self.damage
+        if target.health <= 0:
+            print(f"{target.name} has been defeated!")
+            return True
+        else:
+            print(f"{target.name} has {target.health} health left!")
+            return False
+        
   
 
 class Player:
@@ -54,6 +73,7 @@ class Player:
            for val in self.__stats.values():
                val += 1
            self.next_level *= 1.5
+           self.health += 50
 
    
 class Fighter(Player):

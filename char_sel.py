@@ -1,5 +1,5 @@
 def heal():
-  h = ("heal", "revive", "purify", "blessing", "barrier")
+  h = ("purify", "blessing", "barrier")
   hls = input("Enter spell:\n")
   if hls not in h:
       print("Invalid spell. Please choose again.")
@@ -73,11 +73,9 @@ def char_sel():
 
   if cl.lower() == "healer":
     print("Choose a starter spell: ")
-    print("1. Heal ")
-    print("2. Revive ")
-    print("3. Purify ")
-    print("4. Blessing")
-    print("5. Barrier")
+    print("1. Purify ")
+    print("2. Blessing")
+    print("3. Barrier")
     mgs, wp = heal()
 
   print("Character creation complete.")
