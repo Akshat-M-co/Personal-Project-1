@@ -1,4 +1,5 @@
 auto_save = False
+details = ["Name", "Class", "Weapon", "Spell", "Level", "Health", "Cash", "XP", "Next Level", "Inventory", "Stats"]
 def save_game(details, save_slot):
     if auto_save:
         with open(f"Save file {save_slot}.txt", "w") as save:
