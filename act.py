@@ -157,7 +157,7 @@ class Mage(Player):
         super().__init__(name)
         self.magic = 100
         self.mps = [spell]
-        self.__stats = {"strength":2, "defence":8, "speed":10, "luck": 10}
+        self.stats = {"strength":2, "defence":8, "speed":10, "luck": 10}
         self.potent = False
     def spell(self, target):
         print("Choose spell:")

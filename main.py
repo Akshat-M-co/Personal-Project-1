@@ -31,12 +31,13 @@ def mainmenu():
             player = act.Healer(name, mgs)
         print("Enter the save slot you wish to save to.")
         slot = valid()
-        save.save_game([player.name, cl, wp, mgs, player.level, player.health, player.cash, player.xp, player.next_level, player.inventory, player.__stats, "New Game"], slot)
+        print([player.name, cl, wp, mgs, player.level, player.health, player.cash, player.xp, player.next_level, player.inventory, player.stats, "New Game"])
+        save.save_game([player.name, cl, wp, mgs, player.level, player.health, player.cash, player.xp, player.next_level, player.inventory, player.stats, "New Game"], slot)
         return player
     if opt == 2:
         print("Enter the save slot you wish to load.")
         slot = input("\n")
-        details = save.load_game(slot)
+        details = save.load_game(slot, mainmenu)
         if not(details):
             print("File cannot be loaded from. Please try again.")
             mainmenu()
@@ -63,28 +64,28 @@ def mainmenu():
         settings()
 def settings():
     print("Settings")
-        print("1. Autosave")
-        print("2. Delete Save")
-        print("3. Exit Settings")
-        opto = valid()
-     if opto == 1:
+    print("1. Autosave")
+    print("2. Delete Save")
+    print("3. Exit Settings")
+    opto = valid()
+    if opto == 1:
          save.auto_save = save.switch_autosave(save.auto_save)
          if save.auto_save:
              o = "On"
          else:
              o = "Off"
          print("Autosave is now", o)
-     if opto == 2:
+    if opto == 2:
          print("Enter the save slot you wish to delete.")
          slot = input("\n")
          save.delete(slot)
-     if opto == 3:
+    if opto == 3:
          print("Exitting settings...")
          mainmenu()
-     else:
+    else:
          print("Invalid option.")
          settings()
-     return
+    return
 player = mainmenu()
 print("Welcome to the world of Warrior's Quest!")
 print("You are a", player.cl, "named", player.name)

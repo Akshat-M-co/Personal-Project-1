@@ -1,6 +1,7 @@
 auto_save = False
 details = ["Name", "Class", "Weapon", "Spell", "Level", "Health", "Cash", "XP", "Next Level", "Inventory", "Stats"]
 def save_game(details, save_slot):
+    print(details)
     if auto_save:
         with open(f"Save file {save_slot}.txt", "w") as save:
             for i in details:
@@ -13,15 +14,21 @@ def save_game(details, save_slot):
         if ans.lower() == 'y':
             print("Saving your game.")
             with open(f"Save file {save_slot}.txt", "w") as save:
+                print(details)
                 for i in details:
+                    print(i)
                     save.write(i)
                     save.write("\n")
             print("Save complete.")
         else:
             print("Exitting save mode...")
     return
-def load_game(save_slot):
-    load = open(f"Save file {save_slot}", "r")
+def load_game(save_slot, parent):
+    try:
+        load = open(f"Save file {save_slot}", "r")
+    except FileNotFoundError:
+        print("Save file not found.")
+        parent()
     r = load.readline()
     details = []
     while (r):
