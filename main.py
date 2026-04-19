@@ -60,13 +60,13 @@ def mainmenu():
         tutorial.gent()
         mainmenu()
     if opt == 4:
-        print("Settings")
+        settings()
+def settings():
+    print("Settings")
         print("1. Autosave")
         print("2. Delete Save")
         print("3. Exit Settings")
         opto = valid()
-        settings(opto)
-def settings(opto):
      if opto == 1:
          save.auto_save = save.switch_autosave(save.auto_save)
          if save.auto_save:
@@ -83,7 +83,7 @@ def settings(opto):
          mainmenu()
      else:
          print("Invalid option.")
-         mainmenu()
+         settings()
      return
 player = mainmenu()
 print("Welcome to the world of Warrior's Quest!")
