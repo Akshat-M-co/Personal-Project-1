@@ -57,7 +57,9 @@ class Player:
        print(self.name, "is dead.")
   
    def inventory_access(self):
-     print("Inventory: ", self.inventory)
+     print("Inventory: ")
+     for i in inventory:
+       print(i)
      if len(self.inventory) > 10:
        print("no space available.")
 
