@@ -77,35 +77,38 @@ class Fighter(Player):
      super().__init__(name)
      self.weapon = weapon
      self.proficiency = 100
-     self.__stats = {"strength": 10, "speed": 5, "defence": 7, "luck": 4}
+     self.stats = {"strength": 10, "speed": 5, "defence": 7, "luck": 4}
      self.magic = 0
      self.focus = False
+
+  def __str__(self):
+    return "Fighter"
     
   def attack(self, target):
     if self.weapon.durability <= 0:
       print("Weapon is broken")
       return 0
-    dmg = self.weapon.damage + self.__stats["strength"] * self.proficiency / 100 
+    dmg = self.weapon.damage + self.stats["strength"] * self.proficiency / 100 
     ran = random.randint(1, 10)
     sel = random.randint(1, 10)
-    if abs(ran - sel) <= self.__stats["luck"]:
+    if abs(ran - sel) <= self.stats["luck"]:
       print("Attack successful!")
-      target.health -= dmg - target.__stats["defence"]
+      target.health -= dmg - target.stats["defence"]
       self.weapon.durability -= 1
       if self.focus:
           self.focus = False
-          self.__stats["luck"] /= 2
+          self.stats["luck"] /= 2
   def Focus(self):
       if not(self.focus):
           self.focus = True
-          self.__stats["luck"] *= 2
+          self.stats["luck"] *= 2
           print("Focus activated!")
       else:
           print("Focus already activated!")
   def level_up(self):
          if self.xp >= self.next_level:
              self.level += 1
-             for val in self.__stats.values():
+             for val in self.stats.values():
                  val += 1
              self.next_level *= 1.5
              self.health += 50
@@ -117,15 +120,16 @@ class Barbarian(Player):
     super().__init__(name)
     self.magic = 20
     self.weapon = weapon
-    self.__stats = {"strength": 15, "speed": 5, "defence": 3, "luck": 2}
+    self.stats = {"strength": 15, "speed": 5, "defence": 3, "luck": 2}
     self.rage = False
-  
+  def __str__(self):
+    return "Barbarian"
   def Rage(self):
     if self.magic < 10:
       print("Not enough magic! Consume a materium to restore Magic potential")
       return
     print("Rage Activated!")
-    self.__stats["strength"] *= 1.5
+    self.stats["strength"] *= 1.5
     self.magic -= 10
     self.rage = True
     
@@ -133,20 +137,20 @@ class Barbarian(Player):
     if self.weapon.durability <= 0:
       print("Weapon is broken")
       return 0
-    dmg = self.weapon.damage + self.__stats["strength"]
+    dmg = self.weapon.damage + self.stats["strength"]
     ran = random.randint(1, 10)
     sel = random.randint(1, 10)
-    if abs(ran - sel) <= self.__stats["luck"]:
+    if abs(ran - sel) <= self.stats["luck"]:
       print("Attack successful!")
-      target.health -= dmg - target.__stats["defence"]
+      target.health -= dmg - target.stats["defence"]
       self.weapon.durability -= 1
     if self.rage:
       self.rage = False
-      self.__stats["strength"] /= 1.5
+      self.stats["strength"] /= 1.5
   def level_up(self):
          if self.xp >= self.next_level:
              self.level += 1
-             for val in self.__stats.values():
+             for val in self.stats.values():
                  val += 1
              self.next_level *= 1.5
              self.health += 50
@@ -159,6 +163,8 @@ class Mage(Player):
         self.mps = [spell]
         self.stats = {"strength":2, "defence":8, "speed":10, "luck": 10}
         self.potent = False
+    def __str__(self):
+        return "Mage"
     def spell(self, target):
         print("Choose spell:")
         for i in self.mps:
@@ -178,21 +184,21 @@ class Mage(Player):
                 self.potent = False
                 self.magic /= 2
                 dmg *= 2
-                self.__stats["luck"] *= 2
+                self.stats["luck"] *= 2
             x, y = random.randint(1, 30), random.randint(1, 30)
-            if abs(x-y) <= self.__stats["luck"]:
+            if abs(x-y) <= self.stats["luck"]:
                 print("Spell successful!")
                 target.health -= dmg
     def Potency(self):
         if not(self.potent):
             self.potent = True
             self.magic *= 2
-            self.__stats["luck"] /= 2
+            self.stats["luck"] /= 2
             print("Potency activated!")
     def level_up(self):
            if self.xp >= self.next_level:
                self.level += 1
-               for val in self.__stats.values():
+               for val in self.stats.values():
                    val += 1
                self.next_level *= 1.5
                self.health += 50
@@ -202,8 +208,10 @@ class Healer(Player):
         super().__init__(name)
         self.magic = 150
         self.mps = [spell]
-        self.__stats = {"strength":1, "defence":8, "speed": 7, "luck": 8}
+        self.stats = {"strength":1, "defence":8, "speed": 7, "luck": 8}
         self.wind = False
+    def __str__(self):
+        return "Healer"
     def heal(self, target):
         if self.magic < 15:
             print("Not enough magic! Use a materium to restore magical potential.")
@@ -235,7 +243,7 @@ class Healer(Player):
     def level_up(self):
            if self.xp >= self.next_level:
                self.level += 1
-               for val in self.__stats.values():
+               for val in self.stats.values():
                    val += 1
                self.next_level *= 1.5
                self.health += 50

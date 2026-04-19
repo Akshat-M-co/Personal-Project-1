@@ -1,4 +1,4 @@
-import act, save, tutorial, char_sel, random
+import act, save, tutorial, char_sel, random, json
 def valid():
     try:
         num = int(input("\n"))
@@ -31,8 +31,7 @@ def mainmenu():
             player = act.Healer(name, mgs)
         print("Enter the save slot you wish to save to.")
         slot = valid()
-        print([player.name, cl, wp, mgs, player.level, player.health, player.cash, player.xp, player.next_level, player.inventory, player.stats, "New Game"])
-        save.save_game([player.name, cl, wp, mgs, player.level, player.health, player.cash, player.xp, player.next_level, player.inventory, player.stats, "New Game"], slot)
+        save.save_game([player.name, cl, str(wp), str(mgs), str(player.level), str(player.health), str(player.cash), str(player.xp), str(player.next_level), " ".join(player.inventory)], slot, player.stats)
         return player
     if opt == 2:
         print("Enter the save slot you wish to load.")
@@ -55,7 +54,7 @@ def mainmenu():
         player.xp = details[7]
         player.next_level = details[8]
         player.inventory = details[9]
-        player.__stats = details[10]
+        player.stats = details[10]
         return player
     if opt == 3:
         tutorial.gent()
@@ -88,7 +87,7 @@ def settings():
     return
 player = mainmenu()
 print("Welcome to the world of Warrior's Quest!")
-print("You are a", player.cl, "named", player.name)
+print("You are a", player, "named", player.name)
 print("You have", player.health, "HP")
 print("You have", player.cash, "cash")
 print("You have", player.xp, "XP")

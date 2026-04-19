@@ -1,6 +1,7 @@
+import json
 auto_save = False
 details = ["Name", "Class", "Weapon", "Spell", "Level", "Health", "Cash", "XP", "Next Level", "Inventory", "Stats"]
-def save_game(details, save_slot):
+def save_game(details, save_slot, stats):
     print(details)
     if auto_save:
         with open(f"Save file {save_slot}.txt", "w") as save:
@@ -8,6 +9,10 @@ def save_game(details, save_slot):
                 save.write(i)
                 save.write("\n")
                 print("Save complete. Turn off autosave in the settings, if not wanted.")
+        with open(f"Stats file {save_slot}.json", "w") as jsonfil:
+            json_string = json.dumps(stats, indent=4)
+            jsonfil.write(json_string)
+
     else:
         print("Are you sure you wish to save the game? (y/n)")
         ans = input("\n")
@@ -19,6 +24,9 @@ def save_game(details, save_slot):
                     print(i)
                     save.write(i)
                     save.write("\n")
+            with open(f"Stats file {save_slot}.json", "w") as jsonfil:
+                json_string = json.dumps(stats, indent=4)
+                jsonfil.write(json_string)
             print("Save complete.")
         else:
             print("Exitting save mode...")
