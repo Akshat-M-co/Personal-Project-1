@@ -14,6 +14,8 @@ class Weapon:
     if self.durability <= 0:
         print("Weapon destroyed")
         return True
+  def inrange(self, distance):
+    return self.range <= distance
 class Spell:
     def __init__(self, name, damage, magic_cost, level = 1):
         self.name = name
@@ -39,6 +41,7 @@ class Player:
    def __init__(self, name, level = 1):
      self.name = name
      self.health = 150
+     self.max = 150  
      self.inventory = []
      self.level = level
      self.cash = 100
@@ -67,13 +70,6 @@ class Player:
    def remove_from_inventory(self, item):
       self.inventory.remove(item)
    
-    def level_up(self):
-       if self.xp >= self.next_level:
-           self.level += 1
-           for val in self.__stats.values():
-               val += 1
-           self.next_level *= 1.5
-           self.health += 50
 
    
 class Fighter(Player):
@@ -106,6 +102,14 @@ class Fighter(Player):
           print("Focus activated!")
       else:
           print("Focus already activated!")
+  def level_up(self):
+         if self.xp >= self.next_level:
+             self.level += 1
+             for val in self.__stats.values():
+                 val += 1
+             self.next_level *= 1.5
+             self.health += 50
+             self.max += 50
 
 
 class Barbarian(Player):
@@ -139,6 +143,14 @@ class Barbarian(Player):
     if self.rage:
       self.rage = False
       self.__stats["strength"] /= 1.5
+  def level_up(self):
+         if self.xp >= self.next_level:
+             self.level += 1
+             for val in self.__stats.values():
+                 val += 1
+             self.next_level *= 1.5
+             self.health += 50
+             self.max += 50
 
 class Mage(Player):
     def __init__(self, name, spell):
@@ -177,6 +189,14 @@ class Mage(Player):
             self.magic *= 2
             self.__stats["luck"] /= 2
             print("Potency activated!")
+    def level_up(self):
+           if self.xp >= self.next_level:
+               self.level += 1
+               for val in self.__stats.values():
+                   val += 1
+               self.next_level *= 1.5
+               self.health += 50
+               self.max += 50
 class Healer(Player):
     def __init__(self, name, spell):
         super().__init__(name)
@@ -196,6 +216,8 @@ class Healer(Player):
             target.health += 10*self.level
         else:
             target.health += 5*self.level
+        if target.health > target.max:
+            target.health = target.max
         print("successfully healed ally")
     def revive(self, target):
         if self.magic < 30:
@@ -206,10 +228,17 @@ class Healer(Player):
             return
         self.magic -= 30
         target.health = 100
-        print("Successfully healed ally!")
+        print("Successfully revived ally!")
     def Wind(self):
         self.wind = True
         print("Healing Wind Active!")
+    def level_up(self):
+           if self.xp >= self.next_level:
+               self.level += 1
+               for val in self.__stats.values():
+                   val += 1
+               self.next_level *= 1.5
+               self.health += 50
 
 
 

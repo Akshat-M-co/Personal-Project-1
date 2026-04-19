@@ -13,9 +13,9 @@ def save_game(details, save_slot):
         if ans.lower() == 'y':
             print("Saving your game.")
             with open(f"Save file {save_slot}.txt", "w") as save:
-            for i in player_details:
-                save.write(i)
-                save.write("\n")
+                for i in details:
+                    save.write(i)
+                    save.write("\n")
             print("Save complete.")
         else:
             print("Exitting save mode...")

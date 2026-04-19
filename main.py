@@ -1,4 +1,4 @@
-import act, save, tutorial, char_sel
+import act, save, tutorial, char_sel, random
 def valid():
     try:
         num = int(input("\n"))
@@ -10,14 +10,14 @@ def valid():
         valid()
     else:
         return num
-print("Warrior's Quest - A terminal Adventure!")
-print("Enter the number of the option you wish to choose.")
-print("1. NEW GAME")
-print("2. LOAD GAME")
-print("3. TUTORIAL")
-print("4. SETTINGS")
-opt = valid()
-def mainmenu(opt):
+def mainmenu():
+    print("Warrior's Quest - A terminal Adventure!")
+    print("Enter the number of the option you wish to choose.")
+    print("1. NEW GAME")
+    print("2. LOAD GAME")
+    print("3. TUTORIAL")
+    print("4. SETTINGS")
+    opt = valid()
     if opt == 1:
         print("Starting New Game...")
         name, cl, wp, mgs = char_sel.char_sel()
@@ -32,30 +32,33 @@ def mainmenu(opt):
         print("Enter the save slot you wish to save to.")
         slot = valid()
         save.save_game([player.name, cl, wp, mgs, player.level, player.health, player.cash, player.xp, player.next_level, player.inventory, player.__stats, "New Game"], slot)
+        return player
     if opt == 2:
         print("Enter the save slot you wish to load.")
         slot = input("\n")
         details = save.load_game(slot)
         if not(details):
             print("File cannot be loaded from. Please try again.")
-            mainmenu(opt)
+            mainmenu()
         if details[1].lower() == "fighter":
             player = act.Fighter(details[0], act.Weapon(details[2], 10, 100, 20))
-         elif details[1].lower() == "barbarian":
+        elif details[1].lower() == "barbarian":
              player = act.Barbarian(details[0], act.Weapon(details[2], 8, 150, 15))
-         elif details[1].lower() == "mage":
-             player = act.Mage(details[0], details[3])
-         elif details[1].lower() == "healer":
-             player = act.Healer(details[0], details[3])
-         player.level = details[4]
-         player.health = details[5]
-         player.cash = details[6]
-         player.xp = details[7]
-         player.next_level = details[8]
-         player.inventory = details[9]
-         player.__stats = details[10]
+        elif details[1].lower() == "mage":
+            player = act.Mage(details[0], details[3])
+        elif details[1].lower() == "healer":
+            player = act.Healer(details[0], details[3])
+        player.level = details[4]
+        player.health = details[5]
+        player.cash = details[6]
+        player.xp = details[7]
+        player.next_level = details[8]
+        player.inventory = details[9]
+        player.__stats = details[10]
+        return player
     if opt == 3:
-         tutorial.tutorial()
+        tutorial.gent()
+        mainmenu()
     if opt == 4:
         print("Settings")
         print("1. Autosave")
@@ -66,7 +69,7 @@ def mainmenu(opt):
 def settings(opto):
      if opto == 1:
          save.auto_save = save.switch_autosave(save.auto_save)
-         if save.autosave:
+         if save.auto_save:
              o = "On"
          else:
              o = "Off"
@@ -77,12 +80,12 @@ def settings(opto):
          save.delete(slot)
      if opto == 3:
          print("Exitting settings...")
-         mainmenu(opt)
+         mainmenu()
      else:
          print("Invalid option.")
-         settings()
+         mainmenu()
      return
-mainmenu(opt)
+player = mainmenu()
 print("Welcome to the world of Warrior's Quest!")
 print("You are a", player.cl, "named", player.name)
 print("You have", player.health, "HP")
@@ -99,6 +102,8 @@ def fight(player, enemy):
     if player.cl.lower() == "mage":
         print("2. Spell")
         print("3. Improve Potency")
+    ch = valid()
+    
     
 def market(player):
     print("What would you like to buy?")
@@ -123,7 +128,7 @@ def market(player):
              player.add_to_inventory("Simple Potion")
              print("Purchased Simple Potion!")
              market(player)
-     if ch == 2:
+    if ch == 2:
           if player.cash < 15:
                print("Not enough cash!")
                market(player)
@@ -132,7 +137,7 @@ def market(player):
                player.add_to_inventory("Materium")
                print("Purchased Materium!")
                market(player)
-     if ch == 3:
+    if ch == 3:
          if player.cash < 20:
              print("Not enough cash!")
              market(player)
@@ -141,7 +146,7 @@ def market(player):
              player.add_to_inventory("Deluxe Potion")
              print("Purchased Deluxe Potion!")
              market(player)
-     if ch == 4:
+    if ch == 4:
           if player.cash < 25:
                print("Not enough cash!")
                market(player)
@@ -150,7 +155,7 @@ def market(player):
                player.add_to_inventory("Empowered Materium")
                print("Purchased Empowered Materium!")
                market(player)
-     if ch == 5:
+    if ch == 5:
           if player.cash < 8:
                print("Not enough cash!")
                market(player)
@@ -159,7 +164,7 @@ def market(player):
                player.add_to_inventory("Strength Potion")
                print("Purchased Strength Potion!")
                market(player)
-     if ch == 6:
+    if ch == 6:
           if player.cash < 8:
                print("Not enough cash!")
                market(player)
@@ -168,7 +173,7 @@ def market(player):
                player.add_to_inventory("Defence Potion")
                print("Purchased Defence Potion!")
                market(player)
-     if ch == 7:
+    if ch == 7:
           if player.cash < 8:
                print("Not enough cash!")
                market(player)
@@ -177,7 +182,7 @@ def market(player):
                player.add_to_inventory("Speed Potion")
                print("Purchased Speed Potion!")
                market(player)
-     if ch == 8:
+    if ch == 8:
           if player.cash < 8:
                print("Not enough cash!")
                market(player)
@@ -186,7 +191,7 @@ def market(player):
                player.add_to_inventory("Luck Potion")
                print("Purchased Luck Potion!")
                market(player)
-     if ch == 9:
+    if ch == 9:
           if player.cash < 15:
                print("Not enough cash!")
                market(player)
@@ -195,7 +200,7 @@ def market(player):
                player.add_to_inventory("Horn of Mead")
                print("Purchased Horn of Mead!")
                market(player)
-     if ch == 10:
+    if ch == 10:
           if player.cash < 30:
                print("Not enough cash!")
                market(player)
@@ -204,10 +209,10 @@ def market(player):
                player.add_to_inventory("Mysterious Orb")
                print("Purchased Mysterious Orb!")
                market(player)
-     if ch == 11:
+    if ch == 11:
           print("Exitting shop...")
           return
-     else:
+    else:
           print("Invalid option.")
           market(player)
 def tournament(player):
@@ -232,3 +237,5 @@ def tournament_round(player, round_no):
     if round_no == 1:
         enemy = act.Mage("Eregrin", "Fireball")
         print("You are fighting a mage named Eregrin!")
+        print("You attack first!")
+        
