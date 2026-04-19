@@ -2,9 +2,6 @@ import act, save, tutorial, char_sel, random, json
 def valid():
     try:
         num = int(input("\n"))
-        if num > 4 or num < 1:
-            print("Invalid option.")
-            num = valid()
     except:
         print("Please enter a number for the option you choose.")
         valid()
@@ -33,7 +30,7 @@ def mainmenu():
         slot = valid()
         save.save_game([player.name, cl, str(wp), str(mgs), str(player.level), str(player.health), str(player.cash), str(player.xp), str(player.next_level), " ".join(player.inventory)], slot, player.stats)
         return player
-    if opt == 2:
+    elif opt == 2:
         print("Enter the save slot you wish to load.")
         slot = input("\n")
         details = save.load_game(slot, mainmenu)
@@ -56,11 +53,14 @@ def mainmenu():
         player.inventory = details[9]
         player.stats = details[10]
         return player
-    if opt == 3:
+    elif opt == 3:
         tutorial.gent()
         mainmenu()
-    if opt == 4:
+    elif opt == 4:
         settings()
+    else:
+        print("Invalid Option. PLease try again.")
+        mianmenu()
 def settings():
     print("Settings")
     print("1. Autosave")
@@ -74,11 +74,11 @@ def settings():
          else:
              o = "Off"
          print("Autosave is now", o)
-    if opto == 2:
+    elif opto == 2:
          print("Enter the save slot you wish to delete.")
          slot = input("\n")
          save.delete(slot)
-    if opto == 3:
+    elif opto == 3:
          print("Exitting settings...")
          mainmenu()
     else:
@@ -128,7 +128,7 @@ def market(player):
              player.add_to_inventory("Simple Potion")
              print("Purchased Simple Potion!")
              market(player)
-    if ch == 2:
+    elif ch == 2:
           if player.cash < 15:
                print("Not enough cash!")
                market(player)
@@ -137,7 +137,7 @@ def market(player):
                player.add_to_inventory("Materium")
                print("Purchased Materium!")
                market(player)
-    if ch == 3:
+    elif ch == 3:
          if player.cash < 20:
              print("Not enough cash!")
              market(player)
@@ -146,7 +146,7 @@ def market(player):
              player.add_to_inventory("Deluxe Potion")
              print("Purchased Deluxe Potion!")
              market(player)
-    if ch == 4:
+    elif ch == 4:
           if player.cash < 25:
                print("Not enough cash!")
                market(player)
@@ -155,7 +155,7 @@ def market(player):
                player.add_to_inventory("Empowered Materium")
                print("Purchased Empowered Materium!")
                market(player)
-    if ch == 5:
+    elif ch == 5:
           if player.cash < 8:
                print("Not enough cash!")
                market(player)
@@ -164,7 +164,7 @@ def market(player):
                player.add_to_inventory("Strength Potion")
                print("Purchased Strength Potion!")
                market(player)
-    if ch == 6:
+    elif ch == 6:
           if player.cash < 8:
                print("Not enough cash!")
                market(player)
@@ -173,7 +173,7 @@ def market(player):
                player.add_to_inventory("Defence Potion")
                print("Purchased Defence Potion!")
                market(player)
-    if ch == 7:
+    elif ch == 7:
           if player.cash < 8:
                print("Not enough cash!")
                market(player)
@@ -182,7 +182,7 @@ def market(player):
                player.add_to_inventory("Speed Potion")
                print("Purchased Speed Potion!")
                market(player)
-    if ch == 8:
+    elif ch == 8:
           if player.cash < 8:
                print("Not enough cash!")
                market(player)
@@ -191,7 +191,7 @@ def market(player):
                player.add_to_inventory("Luck Potion")
                print("Purchased Luck Potion!")
                market(player)
-    if ch == 9:
+    elif ch == 9:
           if player.cash < 15:
                print("Not enough cash!")
                market(player)
@@ -200,7 +200,7 @@ def market(player):
                player.add_to_inventory("Horn of Mead")
                print("Purchased Horn of Mead!")
                market(player)
-    if ch == 10:
+    elif ch == 10:
           if player.cash < 30:
                print("Not enough cash!")
                market(player)
@@ -209,7 +209,7 @@ def market(player):
                player.add_to_inventory("Mysterious Orb")
                print("Purchased Mysterious Orb!")
                market(player)
-    if ch == 11:
+    elif ch == 11:
           print("Exitting shop...")
           return
     else:
@@ -228,7 +228,7 @@ def tournament(player):
           else:
                player.cash -= 25
                print("You have entered the tournament!")
-                #enemy 1
+               tournament_round()
      else:
           print("Exitting tournament...")
           return
