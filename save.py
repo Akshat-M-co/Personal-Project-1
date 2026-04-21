@@ -1,51 +1,36 @@
 import json
 auto_save = False
-details = ["Name", "Class", "Weapon", "Spell", "Level", "Health", "Cash", "XP", "Next Level", "Inventory", "Stats"]
-def save_game(details, save_slot, stats):
+def save_game(details, save_slot):
+    keys = ["name", "class", "weapon", "spell", "level", "health", "cash", "xp", "next_level", "inventory", "stats"]
     print(details)
     if auto_save:
-        with open(f"Save file {save_slot}.txt", "w") as save:
-            for i in details:
-                save.write(i)
-                save.write("\n")
-                print("Save complete. Turn off autosave in the settings, if not wanted.")
-        with open(f"Stats file {save_slot}.json", "w") as jsonfil:
-            json_string = json.dumps(stats, indent=4)
-            jsonfil.write(json_string)
+        savedict = dict(zip(keys, details))
+        with open(f"Save file {save_slot}.json", "w") as f:
+            json.dumps(savedict, f, indent=4)
+        print("Save complete. Turn off autosave in the settings, if not wanted.")
 
     else:
         print("Are you sure you wish to save the game? (y/n)")
         ans = input("\n")
         if ans.lower() == 'y':
             print("Saving your game.")
-            with open(f"Save file {save_slot}.txt", "w") as save:
-                print(details)
-                for i in details:
-                    print(i)
-                    save.write(i)
-                    save.write("\n")
-            with open(f"Stats file {save_slot}.json", "w") as jsonfil:
-                json_string = json.dumps(stats, indent=4)
-                jsonfil.write(json_string)
+            savedict = dict(zip(keys, details))
+            with open(f"Save file {save_slot}.json", "w") as f:
+                json.dumps(savedict, f, indent=4)
             print("Save complete.")
         else:
             print("Exitting save mode...")
     return
 def load_game(save_slot, parent):
     try:
-        load = open(f"Save file {save_slot}", "r")
+        with open(f"Save file {save_slot}.json", "r") as l:
+            result = json.load(l)
     except FileNotFoundError:
-        print("Save file not found.")
-        parent()
-    r = load.readline()
-    details = []
-    while (r):
-        details.append(r)
-    load.close()
+        return 1
     print("Loading complete.")
-    return details
+    return result
 def delete(save_slot):
-    o = open(f"Save file {save_slot}.txt", "w")
+    o = open(f"Save file {save_slot}.json", "w")
     o.close()
     print("Deleted save game.")
     return

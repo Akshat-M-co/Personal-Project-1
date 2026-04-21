@@ -28,7 +28,7 @@ def mainmenu():
             player = act.Healer(name, mgs)
         print("Enter the save slot you wish to save to.")
         slot = valid()
-        save.save_game([player.name, cl, str(wp), str(mgs), str(player.level), str(player.health), str(player.cash), str(player.xp), str(player.next_level), " ".join(player.inventory)], slot, player.stats)
+        save.save_game([player.name, cl, str(wp), str(mgs), str(player.level), str(player.health), str(player.cash), str(player.xp), str(player.next_level), player.inventory, player.stats], slot)
         return player
     elif opt == 2:
         print("Enter the save slot you wish to load.")
@@ -60,7 +60,7 @@ def mainmenu():
         settings()
     else:
         print("Invalid Option. PLease try again.")
-        mianmenu()
+        mainmenu()
 def settings():
     print("Settings")
     print("1. Autosave")
