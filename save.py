@@ -16,19 +16,23 @@ def save_game(details, save_slot):
             print("Saving your game.")
             savedict = dict(zip(keys, details))
             with open(f"Save file {save_slot}.json", "w") as f:
-                json.dumps(savedict, f, indent=4)
+                json.dump(savedict, f, indent=4)
             print("Save complete.")
         else:
             print("Exitting save mode...")
     return
-def load_game(save_slot, parent):
+def load_game(save_slot):
+    keys = ["name", "class", "weapon", "spell", "level", "health", "cash", "xp", "next_level", "inventory", "stats"]
     try:
         with open(f"Save file {save_slot}.json", "r") as l:
             result = json.load(l)
     except FileNotFoundError:
         return 1
+    details = []
+    for i in keys:
+        details.append(result[i])
     print("Loading complete.")
-    return result
+    return details
 def delete(save_slot):
     o = open(f"Save file {save_slot}.json", "w")
     o.close()

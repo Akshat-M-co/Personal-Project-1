@@ -33,14 +33,14 @@ def mainmenu():
     elif opt == 2:
         print("Enter the save slot you wish to load.")
         slot = input("\n")
-        details = save.load_game(slot, mainmenu)
+        details = save.load_game(slot)
         if not(details):
             print("File cannot be loaded from. Please try again.")
             mainmenu()
         if details[1].lower() == "fighter":
             player = act.Fighter(details[0], act.Weapon(details[2], 10, 100, 20))
         elif details[1].lower() == "barbarian":
-             player = act.Barbarian(details[0], act.Weapon(details[2], 8, 150, 15))
+            player = act.Barbarian(details[0], act.Weapon(details[2], 8, 150, 15))
         elif details[1].lower() == "mage":
             player = act.Mage(details[0], details[3])
         elif details[1].lower() == "healer":
