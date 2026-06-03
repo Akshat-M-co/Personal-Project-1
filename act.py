@@ -35,10 +35,9 @@ class Spell:
             print(f"{target.name} has {target.health} health left!")
             return False
         
-  
 
 class Player:
-    def __init__(self, name, level = 1):
+    def __init__(self, name, level = 1, is_enemy = False):
       self.name = name
       self.health = 150
       self.max = 150  
@@ -49,6 +48,7 @@ class Player:
       self.xp = 0
       self.next_level = 100
       self.weapon = None
+      self.is_enemy = is_enemy
         
     def __str__(self):
       return f"{self.name} has {self.health} HP"
@@ -102,9 +102,9 @@ class Player:
             self.stats = stats
         else:
             self.stats[attr] = stats
+    def get_is_enemy(self):
+        return self.is_enemy
     
-
-   
 class Fighter(Player):
   def __init__(self, name, weapon):
      super().__init__(name)
