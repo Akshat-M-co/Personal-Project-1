@@ -38,38 +38,56 @@ class Spell:
   
 
 class Player:
-   def __init__(self, name, level = 1):
-     self.name = name
-     self.health = 150
-     self.max = 150  
-     self.inventory = []
-     self.level = level
-     self.cash = 100
-     self.xp = 0
-     self.next_level = 100
-   def __str__(self):
-     return f"{self.name} has {self.health} HP"
+    def __init__(self, name, level = 1):
+      self.name = name
+      self.health = 150
+      self.max = 150  
+      self.inventory = []
+      self.stats = {}
+      self.level = level
+      self.cash = 100
+      self.xp = 0
+      self.next_level = 100
+      self.weapon = None
+        
+    def __str__(self):
+      return f"{self.name} has {self.health} HP"
 
-   def damage(self, src, dmg_amt, num_hits):
-     self.health -= dmg_amt * num_hits
-     print("Took damage from", src.name, "for", dmg_amt * num_hits)
-     if self.health <= 0:
-       print(self.name, "is dead.")
+    def damage(self, src, dmg_amt, num_hits):
+      self.health -= dmg_amt * num_hits
+      print("Took damage from", src.name, "for", dmg_amt * num_hits)
+      if self.health <= 0:
+        print(self.name, "is dead.")
   
-   def inventory_access(self):
-     print("Inventory: ", self.inventory)
-     if len(self.inventory) > 10:
-       print("no space available.")
-
-   def add_to_inventory(self, item):
-     if len(self.inventory) > 10:
+    def inventory_access(self):
+      print("Inventory: ", self.inventory)
+      if len(self.inventory) > 10:
         print("no space available.")
-        return
-     self.inventory.append(item)
-  
-   def remove_from_inventory(self, item):
-      self.inventory.remove(item)
-   
+
+    def add_to_inventory(self, item):
+      if len(self.inventory) > 10:
+         print("no space available.")
+         return
+      self.inventory.append(item)
+    def remove_from_inventory(self, item):
+       self.inventory.remove(item)
+
+    #getters and setters
+    def get_stats(self, stats, attr=None):
+        if not attr:
+            return self.stats
+        return self.stats[attr]
+    def get_health(self):
+        return self.health
+    def get_level(self):
+        return self.level
+    def get_cash(self):
+        return self.cash
+    def get_xp(self):
+        return self.xp
+    def get_next_level(self):
+        return self.next_level
+    
 
    
 class Fighter(Player):
@@ -82,7 +100,7 @@ class Fighter(Player):
      self.focus = False
     
   def attack(self, target):
-    if self.weapon.durability <= 0:
+    if self.weapon is None or self.weapon.durability <= 0:
       print("Weapon is broken")
       return 0
     dmg = self.weapon.damage + self.__stats["strength"] * self.proficiency / 100 
@@ -130,7 +148,7 @@ class Barbarian(Player):
     self.rage = True
     
   def attack(self, target):
-    if self.weapon.durability <= 0:
+    if self.weapon is None or self.weapon.durability <= 0:
       print("Weapon is broken")
       return 0
     dmg = self.weapon.damage + self.__stats["strength"]
