@@ -48,13 +48,15 @@ def mainmenu():
             player = act.Mage(details[0], details[3])
         elif details[1].lower() == "healer":
             player = act.Healer(details[0], details[3])
-        player.level = details[4]
-        player.health = details[5]
-        player.cash = details[6]
+        player.set_health(details[5])
+        player.set_level(details[4])
+        player.set_cash(details[6])
+        player.set_xp(details[7])
+        player.set_next_level(details[8])
         player.xp = details[7]
         player.next_level = details[8]
         player.inventory = details[9]
-        player.__stats = details[10]
+        player.stats = details[10]
         return player
     if opt == 3:
         tutorial.gent()

@@ -87,6 +87,11 @@ class Player:
         return self.xp
     def get_next_level(self):
         return self.next_level
+    def get_inventory(self, slot=None):
+        if not slot:
+            return self.inventory
+        else:
+            return self.inventory[slot]
     def set_health(self, health):
         self.health = health
     def set_level(self, level):
@@ -104,6 +109,11 @@ class Player:
             self.stats[attr] = stats
     def get_is_enemy(self):
         return self.is_enemy
+    def set_inventory(self, inventory):
+        if not isinstance(inventory, list):
+            print("Unsuccessful setting of inventory. Please give a list as a parameter.")
+            return
+        self.inventory = inventory
     
 class Fighter(Player):
   def __init__(self, name, weapon):
