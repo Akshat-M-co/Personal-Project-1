@@ -87,6 +87,21 @@ class Player:
         return self.xp
     def get_next_level(self):
         return self.next_level
+    def set_health(self, health):
+        self.health = health
+    def set_level(self, level):
+        self.level = level
+    def set_cash(self, cash):
+        self.cash = cash
+    def set_xp(self, xp):
+        self.xp = xp
+    def set_next_level(self, next_level):
+        self.next_level = next_level
+    def set_stats(self, stats, attr=None):
+        if isinstance(stats, dict):
+            self.stats = stats
+        else:
+            self.stats[attr] = stats
     
 
    
