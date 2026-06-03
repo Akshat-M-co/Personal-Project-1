@@ -59,8 +59,10 @@ class Player:
       if self.health <= 0:
         print(self.name, "is dead.")
   
-    def inventory_access(self):
-      print("Inventory: ", self.inventory)
+    def inv_access(self):
+      print("Inventory: ")
+      for i in self.inventory:
+          print(i)
       if len(self.inventory) > 10:
         print("no space available.")
 
