@@ -98,15 +98,26 @@ def fight(player, enemy):
     print("Choose an option:")
     print("1. Attack")
     if player.cl.lower() == "fighter":
-        print("2. Focus")
+        print("2. Critical Strike")
+        print("3. Focus")
     if player.cl.lower() == "barbarian":
-        print("2. Rage")
+        print("2. Cleaver")
+        print("3. Rage")
     if player.cl.lower() == "mage":
-        print("2. Spell")
+        print("2. Spell - ", end=" ")
+        for i in player.mps:
+            print(i, end="|")
         print("3. Improve Potency")
-    ch = valid()
-    
-    
+    if player.cl.lower() == "healer":
+        print("2. Spell - ", end="")
+        for i in player.mps:
+            print(i, end="|")
+        print("3. Activate the healing wind")
+    choice = valid()
+    if choice < 1 and choice > 3:
+        print("Invalid choice. Try again.")
+        choice = valid()
+
 def market(player):
     print("What would you like to buy?")
     print("1. Simple Potion - 10 cash - Heal 50 hp")
@@ -237,7 +248,7 @@ def tournament(player):
 def tournament_round(player, round_no):
     print("Round", round_no, "of the tournament!")
     if round_no == 1:
-        enemy = act.Mage("Eregrin", "Fireball")
+        enemy = act.Mage("Eregrin", "Fireball", is_enemy=True)
         print("You are fighting a mage named Eregrin!")
         print("You attack first!")
         
